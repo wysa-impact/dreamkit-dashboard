@@ -18,7 +18,7 @@
       --text-primary: #0b2970;
       --text-muted: #8a9ab8;
     }
-
+last
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
@@ -527,27 +527,36 @@
 </div>
 
 <script>
-  const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxnZ9r6KbyoNwNK5bHbn-J6_omR2A0GfglECnhqgx3u8uZTdTigdxGVPrAIBjchybg-Ow/exec";
+const SHEETS_URL = "YOUR_URL";
 
-  async function loadData() {
-    if (SHEETS_URL === "https://script.google.com/macros/s/AKfycbxnZ9r6KbyoNwNK5bHbn-J6_omR2A0GfglECnhqgx3u8uZTdTigdxGVPrAIBjchybg-Ow/exec") {
-      document.getElementById("last-updated").textContent = "—";
-      return;
+async function loadData() {
+  try {
+    const res = await fetch(SHEETS_URL);
+    const data = await res.json();
+
+    console.log(data);
+
+    if (data.last_updated) {
+      document.getElementById("last-updated").textContent =
+        data.last_updated;
     }
-    try {
-      const res = await fetch(SHEETS_URL);
-      const data = await res.json();
-      if (data.last_updated) document.getElementById("last-updated").textContent = data.last_updated;
-      document.querySelectorAll("[data-field]").forEach(el => {
-        const key = el.getAttribute("data-field");
-        if (data[key] !== undefined) el.textContent = data[key];
-      });
-    } catch (err) {
-      document.getElementById("last-updated").textContent = "Unavailable";
-    }
+
+    document.querySelectorAll("[data-field]").forEach(el => {
+      const key = el.getAttribute("data-field");
+
+      if (data[key] !== undefined) {
+        el.textContent = data[key];
+      }
+    });
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("last-updated").textContent =
+      "Unavailable";
   }
+}
 
-  loadData();
+loadData();
 </script>
 
 </body>
