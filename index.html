@@ -542,12 +542,49 @@ async function loadData() {
     }
 
     document.querySelectorAll("[data-field]").forEach(el => {
-      const key = el.getAttribute("data-field");
+    const key = el.getAttribute("data-field");
+    let value = data[key];
 
-      if (data[key] !== undefined) {
-        el.textContent = data[key];
-      }
-    });
+    const commaFields = [
+        "students_reached",
+        "principals_reached",
+        "teachers_onboarded",
+        "schools_onboarded",
+        "parents_reached",
+        "cwws_cps_onboarded",
+        "parent_nudges_sent",
+        "parent_events_held",
+        "student_feedback",
+        "nps_parents",
+        "nps_teachers"
+    ];
+
+    const percentFields = [
+        "schools_sessions_completed",
+        "digital_engagement",
+        "returning_users",
+        "bot_helpfulness",
+        "skill_at_home",
+        "digital_tools_90d"
+    ];
+
+    // Format comma-separated numbers
+    if (commaFields.includes(key) && value !== undefined && value !== null && value !== "") {
+        value = Number(value).toLocaleString("en-IN");
+    }
+
+    // Format percentages
+    if (percentFields.includes(key) && value !== undefined && value !== null && value !== "") {
+        value = value + "%";
+    }
+
+    // Fallback if value missing
+    if (value === undefined || value === null || value === "") {
+        value = "-";
+    }
+
+    el.textContent = value;
+});
 
   } catch (err) {
     console.error(err);
