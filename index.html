@@ -144,6 +144,7 @@ last
     .g6 { grid-template-columns: repeat(6, minmax(0,1fr)); }
     .g5 { grid-template-columns: repeat(5, minmax(0,1fr)); }
     .g4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
     .g2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
 
     .mcard {
@@ -301,11 +302,90 @@ last
       padding-left: 4px;
     }
 
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 48px;
+    }
+
+    .filter-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 24px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .filter-group select {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--navy);
+      background: var(--white);
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .filter-group select:hover {
+      border-color: var(--teal);
+    }
+
+    .filter-group select:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(65, 145, 159, 0.1);
+    }
+
+    .apply-button {
+      padding: 10px 24px;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .apply-button:hover {
+      background: #091f52;
+      box-shadow: 0 4px 12px rgba(11, 41, 112, 0.15);
+    }
+
+    .apply-button:active {
+      transform: scale(0.98);
+    }
+
     @media (max-width: 1100px) {
       .g6, .g5, .g4 { grid-template-columns: repeat(3, minmax(0,1fr)); }
       .main { padding: 0 24px 40px; }
       .header, .info-banner, .programme-desc { padding-left: 24px; padding-right: 24px; }
       .disclaimer { padding: 16px 24px; }
+      .filter-bar { padding: 24px 24px; }
+      .filter-container { gap: 16px; }
+      .filter-group { min-width: 150px; }
     }
   </style>
 </head>
@@ -338,6 +418,43 @@ last
 
 <div class="programme-desc">
   DreamKit is a 10-month preventive skill-building programme in public schools, built on two reinforcing interactions across the academic year. Each girl receives an illustrated workbook with CBT-grounded chapters and QR-linked access to Wysa's AI companion.
+</div>
+
+<div class="filter-bar">
+  <div class="filter-container">
+    <div class="filter-group">
+      <label for="month-select">Month</label>
+      <select id="month-select">
+        <option value="">Select month...</option>
+        <option value="May 2026">May 2026</option>
+        <option value="June 2026">June 2026</option>
+        <option value="July 2026">July 2026</option>
+        <option value="August 2026">August 2026</option>
+        <option value="September 2026">September 2026</option>
+        <option value="October 2026">October 2026</option>
+        <option value="November 2026">November 2026</option>
+        <option value="December 2026">December 2026</option>
+        <option value="January 2027">January 2027</option>
+        <option value="February 2027">February 2027</option>
+        <option value="March 2027">March 2027</option>
+        <option value="April 2027">April 2027</option>
+        <option value="May 2027">May 2027</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="region-select">Region</label>
+      <select id="region-select">
+        <option value="">Select region...</option>
+        <option value="Raigad">Raigad</option>
+        <option value="Karad">Karad</option>
+        <option value="MBMC">MBMC</option>
+        <option value="Satara">Satara</option>
+      </select>
+    </div>
+
+    <button id="apply-filters" class="apply-button">Apply Filters</button>
+  </div>
 </div>
 
 <div class="main">
@@ -375,30 +492,40 @@ last
 
   <div class="section-header">
     <div class="section-pill">Activities</div>
-  </div>
-
-  <div class="grid g5">
-    <div class="mcard">
-      <div class="mcard-value" data-field="schools_sessions_completed">0</div>
-      <div class="mcard-label">Schools with sessions completed</div>
     </div>
-    <div class="mcard">
-      <div class="mcard-value" data-field="digital_engagement">0</div>
-      <div class="mcard-label">Digital engagement</div>
+    
+    <div class="sub-label">Students</div>
+    
+    <div class="grid g3">
+      <div class="mcard">
+        <div class="mcard-value" data-field="schools_sessions_completed">0</div>
+        <div class="mcard-label">Schools with sessions completed</div>
+      </div>
+    
+      <div class="mcard">
+        <div class="mcard-value" data-field="digital_engagement">0</div>
+        <div class="mcard-label">Digital engagement</div>
+      </div>
+    
+      <div class="mcard">
+        <div class="mcard-value" data-field="returning_users">0</div>
+        <div class="mcard-label">Returning users</div>
+      </div>
     </div>
-    <div class="mcard">
-      <div class="mcard-value" data-field="returning_users">0</div>
-      <div class="mcard-label">Returning users</div>
+    
+    <div class="sub-label">Parents</div>
+    
+    <div class="grid g2">
+      <div class="mcard">
+        <div class="mcard-value" data-field="parent_nudges_sent">0</div>
+        <div class="mcard-label">Parent nudges sent</div>
+      </div>
+    
+      <div class="mcard">
+        <div class="mcard-value" data-field="parent_events_held">0</div>
+        <div class="mcard-label">Parent events held</div>
+      </div>
     </div>
-    <div class="mcard">
-      <div class="mcard-value" data-field="parent_nudges_sent">0</div>
-      <div class="mcard-label">Parent nudges sent</div>
-    </div>
-    <div class="mcard">
-      <div class="mcard-value" data-field="parent_events_held">0</div>
-      <div class="mcard-label">Parent events held</div>
-    </div>
-  </div>
 
   <div class="section-header">
     <div class="section-pill">Output</div>
@@ -434,31 +561,29 @@ last
         <tr>
           <th class="col-label">Skill</th>
           <th class="col-baseline">Baseline</th>
-          <th class="col-midline">Midline</th>
           <th class="col-endline">Endline</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Negative thoughts</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><td>Emotional literacy</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><td>Navigating emotions</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><td>Self-efficacy</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><td>Recovery</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><td>Help-seeking</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Negative thoughts</td><td>0</td><td>0</td></tr>
+        <tr><td>Emotional literacy</td><td>0</td><td>0</td></tr>
+        <tr><td>Navigating emotions</td><td>0</td><td>0</td></tr>
+        <tr><td>Self-efficacy</td><td>0</td><td>0</td></tr>
+        <tr><td>Recovery</td><td>0</td><td>0</td></tr>
+        <tr><td>Help-seeking</td><td>0</td><td>0</td></tr>
       </tbody>
     </table>
   </div>
 
-  <div class="sub-label">Digital Engagement</div>
-  <div class="grid g2">
-    <div class="mcard">
-      <div class="mcard-value" data-field="skill_at_home">0%</div>
-      <div class="mcard-label">Users adopting at least 1 skill at home</div>
-    </div>
-    <div class="mcard">
-      <div class="mcard-value" data-field="digital_tools_90d">0%</div>
-      <div class="mcard-label">Users completing 4+ digital tools in the last 90 days</div>
-    </div>
+  <div class="mcard">
+    <div class="mcard-value" data-field="skill_at_home">0%</div>
+    <div class="mcard-label">Users learning at least 1 skill at home</div>
+  </div>
+  
+  <div class="mcard">
+    <div class="mcard-value" data-field="digital_tools_90d">0%</div>
+    <div class="mcard-label">Users practicing 4+ digital tools in the last 90 days</div>
+  </div>
   </div>
 
   <div class="section-header prominent">
@@ -528,6 +653,59 @@ last
 
 <script>
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxnZ9r6KbyoNwNK5bHbn-J6_omR2A0GfglECnhqgx3u8uZTdTigdxGVPrAIBjchybg-Ow/exec";
+const KOBO_SHEETS_URL = "https://script.google.com/macros/s/AKfycbwGLnd0NdqSkk0xQS2OxH8oc_pka3g4kyTafIH5y1_eHZv7TEcq3n4NVXT8aEDB40-k/exec";
+
+async function applyFilters() {
+  const month = document.getElementById("month-select").value;
+  const region = document.getElementById("region-select").value;
+
+  if (!month || !region) {
+    alert("Please select both Month and Region before applying filters.");
+    return;
+  }
+
+  try {
+    // Show loading state
+    const applyButton = document.getElementById("apply-filters");
+    const originalText = applyButton.textContent;
+    applyButton.textContent = "Applying...";
+    applyButton.disabled = true;
+
+    // Call Kobo Apps Script to update Control sheet
+    const koboResponse = await fetch(
+      KOBO_SHEETS_URL + 
+      `?action=setFilters&month=${encodeURIComponent(month)}&region=${encodeURIComponent(region)}`
+    );
+    
+    const koboData = await koboResponse.json();
+    console.log("Kobo update response:", koboData);
+
+    if (!koboData.success) {
+      alert("Failed to update filters. Please try again.");
+      applyButton.textContent = originalText;
+      applyButton.disabled = false;
+      return;
+    }
+
+    // Wait for sheets to recalculate (IMPORTRANGE and formulas take a moment)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Refresh dashboard data
+    await loadData();
+
+    applyButton.textContent = originalText;
+    applyButton.disabled = false;
+
+    console.log(`Filters applied: Month = ${month}, Region = ${region}`);
+  } catch (err) {
+    console.error("Error applying filters:", err);
+    alert("Error applying filters. Please check the console.");
+    
+    const applyButton = document.getElementById("apply-filters");
+    applyButton.textContent = "Apply Filters";
+    applyButton.disabled = false;
+  }
+}
 
 async function loadData() {
   try {
@@ -593,7 +771,11 @@ async function loadData() {
   }
 }
 
+// Initialize: load data on page load
 loadData();
+
+// Attach event listener to Apply button
+document.getElementById("apply-filters").addEventListener("click", applyFilters);
 </script>
 
 </body>
